@@ -10,10 +10,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python 3.11 (64-bit)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -53,7 +53,7 @@ jobs:
           Write-Host "Verified TikTokCreatorAnalytics.exe and bundled adb.exe successfully!"
 
       - name: Upload Windows .exe Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: TikTokCreatorAnalytics-Windows-x64
           path: dist/TikTokCreatorAnalytics/
