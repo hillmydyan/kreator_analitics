@@ -1,0 +1,30 @@
+# Virtual environments
+.venv/
+.venv_win/
+venv/
+ENV/
+
+# PyInstaller build & dist outputs
+build/
+dist/
+
+# Local OS platform-tools binaries (downloaded automatically during build)
+bin/platform-tools/
+platform-tools*.zip
+
+# Local SQLite database & Excel exports
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/exports/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# macOS / Windows metadata
+.DS_Store
+Thumbs.db
