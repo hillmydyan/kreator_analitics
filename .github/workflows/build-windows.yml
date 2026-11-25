@@ -36,24 +36,21 @@ jobs:
           Expand-Archive -Path "platform-tools-win.zip" -DestinationPath "bin" -Force
           Remove-Item -Force "platform-tools-win.zip"
 
-      - name: Build Windows Executable with PyInstaller
+      - name: Build Single-File Windows Executable (.exe) with PyInstaller
         run: python build_windows.py
 
-      - name: Verify Windows .exe and bundled adb.exe
+      - name: Verify Single-File TikTokCreatorAnalytics.exe
         shell: pwsh
         run: |
-          if (-not (Test-Path "dist/TikTokCreatorAnalytics/TikTokCreatorAnalytics.exe")) {
-            Write-Error "TikTokCreatorAnalytics.exe was not generated!"
+          if (-not (Test-Path "dist/TikTokCreatorAnalytics.exe")) {
+            Write-Error "Single-file TikTokCreatorAnalytics.exe was not generated!"
             exit 1
           }
-          if (-not (Test-Path "dist/TikTokCreatorAnalytics/bin/platform-tools/adb.exe")) {
-            Write-Error "Bundled adb.exe was not found!"
-            exit 1
-          }
-          Write-Host "Verified TikTokCreatorAnalytics.exe and bundled adb.exe successfully!"
+          $sizeMB = [math]::Round((Get-Item "dist/TikTokCreatorAnalytics.exe").Length / 1MB, 2)
+          Write-Host "Verified single-file dist/TikTokCreatorAnalytics.exe ($sizeMB MB) successfully!"
 
-      - name: Upload Windows .exe Artifact
+      - name: Upload Single-File Windows .exe Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: TikTokCreatorAnalytics-Windows-x64
-          path: dist/TikTokCreatorAnalytics/
+          name: TikTokCreatorAnalytics-SingleFile-Windows-x64
+          path: dist/TikTokCreatorAnalytics.exe

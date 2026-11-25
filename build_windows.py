@@ -52,8 +52,19 @@ def build() -> int:
         "TikTokCreatorAnalytics",
         "--paths",
         str(root / "src"),
-        str(root / "run_app.py"),
     ]
+
+    # On Windows, build a single self-contained portable TikTokCreatorAnalytics.exe (--onefile)
+    # with adb.exe + DLLs embedded directly inside the single .exe file.
+    if sys.platform == "win32":
+        cmd.append("--onefile")
+        pt_dir = root / "bin" / "platform-tools"
+        for fname in ("adb.exe", "AdbWinApi.dll", "AdbWinUsbApi.dll"):
+            fpath = pt_dir / fname
+            if fpath.is_file():
+                cmd.extend(["--add-binary", f"{fpath};bin/platform-tools"])
+
+    cmd.append(str(root / "run_app.py"))
     print("Running:", " ".join(cmd))
     rc = subprocess.call(cmd)
     if rc != 0:
